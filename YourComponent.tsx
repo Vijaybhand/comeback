@@ -7,7 +7,6 @@ interface ResponseData {
 function YourComponent() {
     const [responseData, setResponseData] = useState<ResponseData | null>(null);
 
-    // Call generateComeback and pass setResponseData as a callback
     const handleGenerateComeback = async () => {
         await generateComeback(setResponseData);
     };
@@ -15,10 +14,10 @@ function YourComponent() {
     return (
         <div>
             <button onClick={handleGenerateComeback}>Generate Comeback</button>
-            {responseData && (
+            {responseData && responseData.content && responseData.content[0] && (
                 <div>
                     <h3>Response:</h3>
-                    <p>{responseData.content[0]?.text ?? 'No response available'}</p>
+                    <p>{responseData.content[0].text}</p>
                 </div>
             )}
         </div>
