@@ -7,8 +7,11 @@ import { Slider } from "@/components/ui/slider"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Zap, Flame, Loader2, Sparkles, Copy, Check, RefreshCw } from "lucide-react"
-import { toast } from "@/hooks/use-toast"
 import { motion, AnimatePresence } from "framer-motion"
+
+type ResponseData = {
+  content: Array<{ text: string }>
+};
 
 const responseTypes = ["Witty", "Sarcastic", "Clever", "Silly", "Savage", "Nerdy"]
 
@@ -19,7 +22,7 @@ export function ComebackGenerator() {
   const [comeback, setComeback] = useState("")
   const [loading, setLoading] = useState(false)
   const [copied, setCopied] = useState(false)
-  const [responseData, setResponseData] = useState(null)
+  const [responseData, setResponseData] = useState<ResponseData | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const generateComeback = async () => {
@@ -66,10 +69,6 @@ export function ComebackGenerator() {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(comeback)
     setCopied(true)
-    toast({
-      title: "Copied!",
-      description: "The comeback has been copied to your clipboard.",
-    })
     setTimeout(() => setCopied(false), 2000)
   }
 

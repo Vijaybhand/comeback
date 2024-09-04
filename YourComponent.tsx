@@ -4,14 +4,18 @@ interface ResponseData {
   content: Array<{ text: string }>;
 }
 
+const generateComeback = async (setComeback: React.Dispatch<React.SetStateAction<string>>) => {
+  const response = await fetch('/api/generate-comeback');
+  const data = await response.json();
+  setComeback(data.comeback);
+};
+
 function YourComponent() {
     const [responseData, setResponseData] = useState<ResponseData | null>(null);
     const [comeback, setComeback] = useState<string>("");
 
     const handleGenerateComeback = async () => {
-        // Call the generateComeback function here
-        // Make sure it's imported or defined in this file
-        await generateComeback();
+        await generateComeback(setComeback);
     };
 
     return (
