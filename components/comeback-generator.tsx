@@ -19,6 +19,7 @@ export function ComebackGenerator() {
   const [comeback, setComeback] = useState("")
   const [loading, setLoading] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [responseData, setResponseData] = useState(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const generateComeback = async () => {
@@ -46,14 +47,17 @@ export function ComebackGenerator() {
       const data = await response.json();
       console.log('API Response Data:', data);
 
-      if (data.content && data.content[0] && data.content[0].text) {
+      if (data.content && Array.isArray(data.content) && data.content.length > 0) {
         setComeback(data.content[0].text);
+        setResponseData({ content: data.content }); // Update responseData state
       } else {
         setComeback("Failed to generate comeback. Please try again.");
+        setResponseData(null);
       }
     } catch (error) {
       console.error('Error generating comeback:', error);
       setComeback("Failed to generate comeback. Please try again.");
+      setResponseData(null);
     } finally {
       setLoading(false);
     }

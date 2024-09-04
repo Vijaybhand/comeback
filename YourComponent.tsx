@@ -6,19 +6,21 @@ interface ResponseData {
 
 function YourComponent() {
     const [responseData, setResponseData] = useState<ResponseData | null>(null);
+    const [comeback, setComeback] = useState<string>("");
 
     const handleGenerateComeback = async () => {
-        // Ensure generateComeback is properly imported and typed
-        await generateComeback(setResponseData);
+        // Call the generateComeback function here
+        // Make sure it's imported or defined in this file
+        await generateComeback();
     };
 
     return (
         <div>
             <button onClick={handleGenerateComeback}>Generate Comeback</button>
-            {responseData?.content?.[0]?.text && (
+            {comeback && (
                 <div>
                     <h3>Response:</h3>
-                    <p>{responseData.content[0].text}</p>
+                    <p>{comeback}</p>
                 </div>
             )}
         </div>
